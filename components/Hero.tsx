@@ -90,15 +90,15 @@ export default function Hero() {
                 </motion.span>
                 <TextRotate
                   texts={[
-                    "💻 work!",
+                    "work!",
                     "✽ fancy!",
-                    "🎯 right!",
-                    "⚡ fast!",
-                    "🎉 fun!",
-                    "🎸 rock!",
-                    "📸 pop!",
+                    "right!",
+                    "fast!",
+                    "fun!",
+                    "rock!",
+                    "pop!",
                   ]}
-                  mainClassName="text-white px-2 sm:px-2 md:px-3 bg-[#f97316] overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+                  mainClassName="text-white px-2 sm:px-4 md:px-3 bg-[#f97316] overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
                   staggerFrom={"last"}
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
@@ -122,7 +122,7 @@ export default function Hero() {
           draggable={true}
           repeat={2}
           dragSensitivity={0.1}
-          className="w-full absolute z-1 h-full top-0 aspect-[996/330] text-gray-200"
+          className="w-full absolute z-1 h-full top-0 aspect-[996/330] text-gray-300"
           responsive
           showPath={true}
           grabCursor
@@ -130,7 +130,7 @@ export default function Hero() {
           {imgs.map((btn, i) => (
             <div
               key={i}
-              className="hover:scale-105 transition-transform duration-300 ease-in-out text-[10px] bg-white text-gray-300"
+              className="hover:scale-105 transition-transform duration-300 ease-in-out text-[10px] bg-white text-gray-500"
             >
               {btn.name}
             </div>

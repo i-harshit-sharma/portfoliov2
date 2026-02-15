@@ -45,6 +45,8 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-playfair: var(--font-playfair);
+  --font-comic-neue: var(--font-comic-neue);
 }
 
 :root {

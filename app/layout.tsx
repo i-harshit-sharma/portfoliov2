@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Playfair } from "next/font/google";
+import { Playwrite_CU_Guides } from "next/font/google";
+import { Comic_Neue } from "next/font/google";
+
 
 export const metadata: Metadata = {
 	title: "Harshit Sharma - Student | Full Stack Developer",
@@ -17,6 +21,14 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
+const comicNeue = Comic_Neue({
+	variable: "--font-comic-neue",
+	subsets: ["latin"],
+	weight: ["400", "300", "700"],
+});
+
+
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -28,7 +40,7 @@ export default function RootLayout({
 				<meta name="google-site-verification" content="x6fanuK-vqvY8EefCAQN0DNrNLg69JlbEEZGkXxiuVI" />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased`}
 			>
 				{children}
 			</body>

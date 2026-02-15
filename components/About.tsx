@@ -64,7 +64,7 @@ const About = () => {
                         "Full Stack Developer | AI Enthusiast | Problem Solver based in Jaipur, Rajasthan",
                         "I Love building things and solving problems, Passionate about AI and its applications",
                         "I am a quick learner and a team player, always eager to learn new technologies and improve my skills",
-                        <span>Currently working as a <span className="text-[#f97316] font-bold">App Developer</span> for my app <span className="text-[#f97316] font-bold">Finvault</span></span>
+                        <span>Currently working as an <span className="text-[#f97316] font-bold">App Developer</span> for my app <span className="text-[#f97316] font-bold">Finvault</span></span>
                     ].map((text, index) => (
                         <div key={index} className="overflow-hidden">
                             <motion.p

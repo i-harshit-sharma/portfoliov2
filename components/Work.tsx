@@ -433,7 +433,7 @@ export default function Work() {
               src="https://github-readme-activity-graph.vercel.app/graph?username=i-harshit-sharma&bg_color=ffffff&color=52525b&line=18181b&point=18181b&area=true&area_color=e4e4e7&hide_border=true&custom_title=Contribution%20Activity"
               alt="GitHub Activity Graph"
               className="w-full h-auto"
-              loading="lazy"
+              loading="eager"
             />
           </div>
 
@@ -455,7 +455,7 @@ export default function Work() {
                 src="https://ghchart.rshah.org/18181b/i-harshit-sharma"
                 alt="GitHub Contribution Calendar"
                 className="w-full h-auto"
-                loading="lazy"
+                loading="eager"
               />
             </div>
           </div>

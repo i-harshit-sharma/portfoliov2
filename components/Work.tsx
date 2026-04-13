@@ -51,8 +51,8 @@ const projects = [
   },
   {
     id: 4,
-    name: "Web3 Platform",
-    description: "Decentralized application for automated market makers.",
+    name: "Micro Marketing tool",
+    description: "",
     url: "https://example.org",
     imageUrl: "",
     githubUrl: "",
@@ -60,7 +60,7 @@ const projects = [
   },
   {
     id: 5,
-    name: "Web3 Platform",
+    name: "AI Voice Interview Platform",
     description: "Decentralized application for automated market makers.",
     url: "https://example.org",
     imageUrl: "",
@@ -69,7 +69,7 @@ const projects = [
   },
   {
     id: 6,
-    name: "Web3 Platform",
+    name: "vidPlatform",
     description: "Decentralized application for automated market makers.",
     url: "https://example.org",
     imageUrl: "",

@@ -29,12 +29,18 @@ const splitIntoCharacters = (text: string): string[] => {
     return Array.from(text)
 }
 
+interface TextItem {
+    text: string
+    prefix?: React.ReactNode
+    suffix?: React.ReactNode
+}
+
 interface TextRotateProps {
     /**
-     * Array of text strings to rotate through.
+     * Array of text strings or objects to rotate through.
      * Required prop with no default value.
      */
-    texts: string[]
+    texts: (string | TextItem)[]
 
     /**
      * render as HTML Tag
@@ -219,7 +225,9 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
 
         // Splitting the text into animation segments
         const elements = useMemo(() => {
-            const currentText = texts[currentTextIndex]
+            const currentItem = texts[currentTextIndex]
+            const currentText = typeof currentItem === "string" ? currentItem : currentItem.text
+
             if (splitBy === "characters") {
                 const text = currentText.split(" ")
                 return text.map((word, i) => ({
@@ -364,7 +372,11 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
                 layout
                 {...props}
             >
-                <span className="sr-only">{texts[currentTextIndex]}</span>
+                <span className="sr-only">
+                    {typeof texts[currentTextIndex] === "string" 
+                        ? (texts[currentTextIndex] as string) 
+                        : (texts[currentTextIndex] as TextItem).text}
+                </span>
 
                 <AnimatePresence
                     mode={animatePresenceMode}
@@ -373,12 +385,26 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
                     <motion.span
                         key={currentTextIndex}
                         className={cn(
-                            "flex flex-wrap",
+                            "flex flex-wrap items-center",
                             splitBy === "lines" && "flex-col w-full"
                         )}
                         aria-hidden
                         layout
                     >
+                        {typeof texts[currentTextIndex] !== "string" && (texts[currentTextIndex] as TextItem).prefix && (
+                            <motion.span
+                                {...getAnimationProps(0)}
+                                transition={{
+                                    ...transition,
+                                    delay: getStaggerDelay(0, 
+                                        (splitBy === "characters" ? (elements as WordObject[]) : (elements as string[]).map(el => ({ characters: [el] }))).reduce((sum, word) => sum + word.characters.length, 0)
+                                    )
+                                }}
+                                className="inline-flex items-center"
+                            >
+                                {(texts[currentTextIndex] as TextItem).prefix}
+                            </motion.span>
+                        )}
                         {(splitBy === "characters"
                             ? (elements as WordObject[])
                             : (elements as string[]).map((el, i) => ({
@@ -429,6 +455,23 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
                                 </span>
                             )
                         })}
+                        {typeof texts[currentTextIndex] !== "string" && (texts[currentTextIndex] as TextItem).suffix && (
+                            <motion.span
+                                {...getAnimationProps(
+                                    (splitBy === "characters" ? (elements as WordObject[]) : (elements as string[]).map(el => ({ characters: [el] }))).reduce((sum, word) => sum + word.characters.length, 0)
+                                )}
+                                transition={{
+                                    ...transition,
+                                    delay: getStaggerDelay(
+                                        (splitBy === "characters" ? (elements as WordObject[]) : (elements as string[]).map(el => ({ characters: [el] }))).reduce((sum, word) => sum + word.characters.length, 0),
+                                        (splitBy === "characters" ? (elements as WordObject[]) : (elements as string[]).map(el => ({ characters: [el] }))).reduce((sum, word) => sum + word.characters.length, 0)
+                                    )
+                                }}
+                                className="inline-flex items-center"
+                            >
+                                {(texts[currentTextIndex] as TextItem).suffix}
+                            </motion.span>
+                        )}
                     </motion.span>
                 </AnimatePresence>
             </MotionComponent>

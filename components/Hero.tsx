@@ -9,6 +9,7 @@ import TextRotate from "@/components/fancy/text/text-rotate"
 import VariableFontAndCursor from "@/components/fancy/text/variable-font-and-cursor"
 import VerticalCutReveal from "@/components/fancy/text/vertical-cut-reveal"
 import { Volume2 } from "lucide-react"
+import Image from "next/image"
 
 
 const path = "M 0 200 L 300 200 C 480 200 480 15 390 15 C 300 15 300 315 390 315 C 480 315 480 200 660 200 L 1000 200"
@@ -80,9 +81,8 @@ export default function Hero() {
             }}
           >
             <LayoutGroup>
-              <motion.p className="flex whitespace-pre text-xl" layout>
+              <motion.div className="flex items-center whitespace-pre text-xl" layout>
                 <motion.span
-                  className="pt-0.5 sm:pt-1 md:pt-2"
                   layout
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
                 >
@@ -90,25 +90,25 @@ export default function Hero() {
                 </motion.span>
                 <TextRotate
                   texts={[
-                    "work!",
-                    "✽ fancy!",
-                    "right!",
-                    "fast!",
-                    "fun!",
-                    "rock!",
-                    "pop!",
+                    { text: "work!", prefix: <Image height={16} width={16} src="/work.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="work" unoptimized/> },
+                    { text: "fancy!", prefix: <Image height={16} width={16} src="/fancy.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fancy" unoptimized/> },
+                    { text: "right!", prefix: <Image height={16} width={16} src="/right.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fancy" unoptimized/> },
+                    { text: "fast!", prefix: <Image height={16} width={16} src="/fast.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fast" unoptimized/> },
+                    { text: "fun!", prefix: <Image height={16} width={16} src="/fun.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fun" unoptimized/> },
+                    { text: "rock!", prefix: <Image height={16} width={16} src="/rock.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="rock" unoptimized/> },
+                    { text: "pop!", prefix: <Image height={16} width={16} src="/pop.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="pop" unoptimized/> },
                   ]}
-                  mainClassName="text-white px-2 sm:px-4 md:px-3 bg-[#f97316] overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
+                  mainClassName="text-white px-2 sm:px-4 md:px-3 bg-[#f97316] overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center items-center rounded-lg"
                   staggerFrom={"last"}
                   initial={{ y: "100%" }}
                   animate={{ y: 0 }}
                   exit={{ y: "-120%" }}
                   staggerDuration={0.025}
-                  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                  splitLevelClassName="overflow-hidden"
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                  rotationInterval={2000}
+                  rotationInterval={4000}
                 />
-              </motion.p>
+              </motion.div>
             </LayoutGroup>
           </VerticalCutReveal>
         </div>

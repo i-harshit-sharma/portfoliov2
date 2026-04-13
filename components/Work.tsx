@@ -49,15 +49,33 @@ const projects = [
       { icon: <Clerk />, label: "Clerk" },
     ] as Tag[],
   },
-  // {
-  //   id: 4,
-  //   name: "Web3 Platform",
-  //   description: "Decentralized application for automated market makers.",
-  //   url: "https://example.org",
-  //   imageUrl: "",
-  //   githubUrl: "",
-  //   tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
-  // },
+  {
+    id: 4,
+    name: "Web3 Platform",
+    description: "Decentralized application for automated market makers.",
+    url: "https://example.org",
+    imageUrl: "",
+    githubUrl: "",
+    tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
+  },
+  {
+    id: 5,
+    name: "Web3 Platform",
+    description: "Decentralized application for automated market makers.",
+    url: "https://example.org",
+    imageUrl: "",
+    githubUrl: "",
+    tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
+  },
+  {
+    id: 6,
+    name: "Web3 Platform",
+    description: "Decentralized application for automated market makers.",
+    url: "https://example.org",
+    imageUrl: "",
+    githubUrl: "",
+    tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
+  },
 ];
 
 /* ── Shared SVG paths ─────────────────────────────── */
@@ -392,6 +410,56 @@ export default function Work() {
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+
+        {/* ── GitHub Stats ─────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mt-20"
+        >
+          <div className="flex items-center gap-3 mb-8">
+            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-zinc-800" aria-hidden>
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            <h3 className="text-xl font-bold text-zinc-900 tracking-tight">GitHub Activity</h3>
+          </div>
+
+          {/* Row 1 — Activity graph (full width) */}
+          <div className="rounded overflow-hidden border border-zinc-200 bg-whiteAdd ">
+            <div className="px-4 pt-4 pb-1 text-xs font-semibold text-zinc-400 uppercase tracking-widest">Activity Graph</div>
+            <img
+              src="https://github-readme-activity-graph.vercel.app/graph?username=i-harshit-sharma&bg_color=ffffff&color=52525b&line=18181b&point=18181b&area=true&area_color=e4e4e7&hide_border=true&custom_title=Contribution%20Activity"
+              alt="GitHub Activity Graph"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Row 2 — Streak (full width) */}
+          {/* <div className="mt-4 rounded-xl overflow-hidden border border-zinc-200 bg-white hover:shadow-md transition-shadow duration-300">
+            <img
+              src="https://streak-stats.demolab.com?user=i-harshit-sharma&hide_current_streak=true&hide_longest_streak=true"
+              alt="GitHub Streak"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div> */}
+
+          {/* Row 3 — Contribution Calendar (full width) */}
+          <div className="mt-4 rounded overflow-hidden border border-zinc-200 bg-white">
+            <div className="px-4 pt-4 pb-1 text-xs font-semibold text-zinc-400 uppercase tracking-widest">Contribution Calendar</div>
+            <div className="p-4">
+              <img
+                src="https://ghchart.rshah.org/18181b/i-harshit-sharma"
+                alt="GitHub Contribution Calendar"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

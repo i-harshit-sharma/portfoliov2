@@ -90,13 +90,13 @@ export default function Hero() {
                 </motion.span>
                 <TextRotate
                   texts={[
-                    { text: "work!", prefix: <Image height={16} width={16} src="/work.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="work" unoptimized/> },
-                    { text: "fancy!", prefix: <Image height={16} width={16} src="/fancy.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fancy" unoptimized/> },
-                    { text: "right!", prefix: <Image height={16} width={16} src="/right.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fancy" unoptimized/> },
-                    { text: "fast!", prefix: <Image height={16} width={16} src="/fast.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fast" unoptimized/> },
-                    { text: "fun!", prefix: <Image height={16} width={16} src="/fun.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="fun" unoptimized/> },
-                    { text: "rock!", prefix: <Image height={16} width={16} src="/rock.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="rock" unoptimized/> },
-                    { text: "pop!", prefix: <Image height={16} width={16} src="/pop.webp" priority className="w-4 h-4 sm:w-6 sm:h-6  mr-2" alt="pop" unoptimized/> },
+                    { text: "work!", prefix: <Image height={16} width={16} src="/work.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="work" unoptimized/> },
+                    { text: "fancy!", prefix: <Image height={16} width={16} src="/fancy.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fancy" unoptimized/> },
+                    { text: "right!", prefix: <Image height={16} width={16} src="/right.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fancy" unoptimized/> },
+                    { text: "fast!", prefix: <Image height={16} width={16} src="/fast.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fast" unoptimized/> },
+                    { text: "fun!", prefix: <Image height={16} width={16} src="/fun.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fun" unoptimized/> },
+                    { text: "rock!", prefix: <Image height={16} width={16} src="/rock.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="rock" unoptimized/> },
+                    { text: "pop!", prefix: <Image height={16} width={16} src="/pop.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="pop" unoptimized/> },
                   ]}
                   mainClassName="text-white px-2 sm:px-4 md:px-3 bg-[#f97316] overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center items-center rounded-lg"
                   staggerFrom={"last"}

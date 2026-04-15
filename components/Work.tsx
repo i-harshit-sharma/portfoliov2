@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import Image from "next/image";
-import { Clerk, Cloudinary, Docker, MongoDB, NextJs, PnpmDark, Prisma, ShadcnUI, TailwindCSS } from "developer-icons";
+import { Android, Clerk, Cloudflare, Cloudinary, CPlusPlus, DigitalOcean, Docker, ExpressJsDark, ExpressJsLight, Firebase, Kotlin, Linux, MongoDB, NextJs, PnpmDark, PostgreSQL, Prisma, ShadcnUI, TailwindCSS, Tensorflow, TypeScript } from "developer-icons";
 
 type Tag = { icon: React.ReactNode; label: string } | string;
 
@@ -15,9 +15,11 @@ const projects = [
     url: "https://blog.harshits.live",
     imageUrl: "/blog.jpg",
     githubUrl: "https://github.com/i-harshit-sharma/blog",
+    caseStudyUrl: "/case-studies/personal-blog",
+    previewAvailable: true,
     tags: [
       { icon: <NextJs />, label: "Next.js" },
-      { icon: <TailwindCSS />, label: "Tailwind CSS" },
+      { icon: <TypeScript />, label: "TypeScript" },
       { icon: <Prisma />, label: "Prisma" },
       { icon: <Cloudinary />, label: "Cloudinary" },
     ] as Tag[],
@@ -29,6 +31,8 @@ const projects = [
     url: "https://new.nitdelhi.ac.in/research/publication/journal?affiliated=Yes",
     imageUrl: "/nitd.png",
     githubUrl: "",
+    caseStudyUrl: "/case-studies/nit-delhi",
+    previewAvailable: true,
     tags: [
       { icon: <NextJs />, label: "Next.js" },
       { icon: <MongoDB />, label: "MongoDB" },
@@ -39,42 +43,111 @@ const projects = [
   {
     id: 3,
     name: "Collaborative Code Platform",
-    description: "Award-winning dynamic portfolio website with rich animations.",
+    description: "A collaborative coding platform that allows multiple users to code together in real-time. Powered by Docker for maximum scalability and security.",
     url: "",
     imageUrl: "/codecollab.png",
     githubUrl: "",
+    badge: "Private Beta",
+    previewAvailable: false,
     tags: [
       { icon: <Docker />, label: "Docker" },
       { icon: <MongoDB />, label: "MongoDB" },
       { icon: <Clerk />, label: "Clerk" },
+      { icon: <ExpressJsDark />, label: "Express.js" },
     ] as Tag[],
   },
   {
     id: 4,
     name: "Micro Marketing tool",
-    description: "",
-    url: "https://example.org",
+    description: "Advanced analytics and marketing automation for small businesses.",
+    url: "",
     imageUrl: "",
     githubUrl: "",
-    tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
+    badge: "In Development",
+    previewAvailable: false,
+    tags: [] as Tag[],
   },
   {
     id: 5,
     name: "AI Voice Interview Platform",
-    description: "Decentralized application for automated market makers.",
-    url: "https://example.org",
+    description: "Automated voice-based interview screening powered by cutting-edge AI.",
+    url: "",
     imageUrl: "",
     githubUrl: "",
-    tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
+    badge: "In Development",
+    previewAvailable: false,
+    tags: [
+      { icon: <NextJs />, label: "Next.js" },
+      { icon: <TailwindCSS />, label: "Tailwind CSS" },
+      { icon: <Prisma />, label: "Prisma" },
+      { icon: <Cloudinary />, label: "Cloudinary" }] as Tag[],
   },
   {
     id: 6,
     name: "vidPlatform",
-    description: "Decentralized application for automated market makers.",
-    url: "https://example.org",
+    description: "Youtube Style video platform with AI features.",
+    url: "",
     imageUrl: "",
     githubUrl: "",
-    tags: ["Solidity", "Ethers.js", "Web3"] as Tag[],
+    badge: "In Development",
+    previewAvailable: false,
+    tags: [
+      { icon: <NextJs />, label: "Next.js" },
+      { icon: <TailwindCSS />, label: "Tailwind CSS" },
+      { icon: <MongoDB />, label: "MongoDB" },
+      { icon: <DigitalOcean />, label: "DigitalOcean" },
+      { icon: <Cloudflare />, label: "Cloudflare R2" },
+
+    ] as Tag[],
+  },
+  {
+    id: 7,
+    name: "Finvault",
+    description: "An Android App with comprehensive financial management application with advanced tracking and insights.",
+    url: "https://github.com/i-harshit-sharma/app-dev",
+    imageUrl: "",
+    badge: "In Development",
+    previewAvailable: false,
+    githubUrl: "https://github.com/i-harshit-sharma/app-dev",
+    tags: [
+      { icon: <Android />, label: "Android" },
+      { icon: <Kotlin />, label: "Kotlin" },
+      { icon: <Firebase />, label: "Firebase" },
+      { icon: <PostgreSQL />, label: "PostgreSQL" },
+    ] as Tag[],
+  },
+  {
+    id: 8,
+    name: "Todo App",
+    description: "A complex todo app with AI features.",
+    url: "",
+    imageUrl: "",
+    githubUrl: "",
+    badge: "In Development",
+    previewAvailable: false,
+    tags: [{ icon: <NextJs />, label: "Next.js" }, { icon: <TailwindCSS />, label: "Tailwind CSS" }, { icon: <MongoDB />, label: "MongoDB" }, { icon: <ShadcnUI />, label: "shadcn/ui" }] as Tag[],
+  },
+  {
+    id: 9,
+    name: "Simple Shell",
+    description: "A simple shell with basic features.",
+    url: "",
+    imageUrl: "",
+    githubUrl: "",
+    badge: "In Development",
+    previewAvailable: false,
+    tags: [{ icon: <CPlusPlus />, label: "C++" }, { icon: <Linux />, label: "Linux" }] as Tag[],
+  },
+  {
+    id: 10,
+    name: "Mental Health Predictor using Social media posts",
+    description: "A machine learning model that predicts mental health using social media posts.",
+    url: "",
+    imageUrl: "",
+    githubUrl: "",
+    badge: "In Development",
+    previewAvailable: false,
+    tags: ["Streamlit", { icon: <Tensorflow />, label: "Tensorflow" }] as Tag[],
   },
 ];
 
@@ -190,6 +263,53 @@ function LinkButton({ url }: { url?: string }) {
   );
 }
 
+/* ── CaseStudyButton ──────────────────────────────── */
+function CaseStudyButton({ caseStudyUrl, compact = false }: { caseStudyUrl?: string; compact?: boolean }) {
+  if (!caseStudyUrl) return null;
+
+  const icon = (
+    <svg viewBox="0 0 24 24" className={`${compact ? "w-3.5 h-3.5" : "w-4 h-4"} fill-none stroke-current stroke-2`} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
+    </svg>
+  );
+
+  if (compact) {
+    return (
+      <div className="relative group/cs">
+        <a
+          href={caseStudyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-7 h-7 rounded-full border border-zinc-200 bg-white/80 backdrop-blur-sm hover:bg-zinc-900 hover:text-white hover:border-zinc-900 transition-all duration-200 text-zinc-700"
+        >
+          {icon}
+        </a>
+        {/* Tooltip */}
+        <div className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-medium bg-zinc-900 text-white rounded-md whitespace-nowrap opacity-0 group-hover/cs:opacity-100 transition-opacity duration-150 z-50">
+          View Case Study
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-zinc-900" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={caseStudyUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center justify-center gap-2 ${compact ? "px-4 py-1.5 text-xs" : "px-6 py-2.5 text-sm"} rounded-full font-semibold border border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800 hover:shadow-lg active:scale-[0.98] transition-all duration-200`}
+    >
+      {icon}
+      Read Case Study
+    </a>
+  );
+}
+
 /* ── ProjectCard ──────────────────────────────────── */
 function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -212,7 +332,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   }, [isPreviewOpen]);
 
   const handleMouseMoveOnImage = (e: React.MouseEvent) => {
-    if (isPreviewOpen) return;
+    if (isPreviewOpen || !project.previewAvailable) return;
     mousePosRef.current = {
       x: (e.clientX / window.innerWidth) * 100,
       y: (e.clientY / window.innerHeight) * 100,
@@ -257,29 +377,49 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
             <div className={`absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300 transition-all duration-500 ${isHoveringImage ? "brightness-75" : ""}`} />
           )}
 
+          {/* Status Badge */}
+          {project.badge && (
+            <div className="absolute top-4 left-4 z-20">
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-orange-500 text-white rounded-full shadow-lg"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                {project.badge}
+              </motion.span>
+            </div>
+          )}
+
           {/* "Hover to Preview" overlay */}
-          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isHoveringImage ? "opacity-100" : "opacity-0"}`}>
-            <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold tracking-wide shadow-lg">
-              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <circle cx="12" cy="12" r="3" />
-                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z" />
-              </svg>
-              Hover to Preview
-            </span>
-          </div>
+          {project.previewAvailable && (
+            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isHoveringImage ? "opacity-100" : "opacity-0"}`}>
+              <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold tracking-wide shadow-lg">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z" />
+                </svg>
+                Hover to Preview
+              </span>
+            </div>
+          )}
         </div>
 
         {/* ── Card bottom content ──────────────────────── */}
         <div className="p-6 flex flex-col gap-3">
-          <h3 className="text-xl font-bold text-zinc-900">{project.name}</h3>
+          <div className="flex items-center justify-between flex-wrap">
+            <h3 className="text-xl font-bold text-zinc-900">{project.name}</h3>
+            {project.caseStudyUrl && !project.badge && (
+              <CaseStudyButton caseStudyUrl={project.caseStudyUrl} compact={true} />
+            )}
+          </div>
           <p className="text-zinc-500 text-sm leading-relaxed">{project.description}</p>
 
-          {/* Tags row + GitHub button */}
-          <div className="flex items-center gap-2 flex-wrap mt-1">
+          {/* Tags row + Links */}
+          <div className="flex items-center gap-2 flex-wrap mt-auto pt-2">
             {project.tags.map((tag, index) => (
               <TagPill key={index} tag={tag} size="sm" />
             ))}
-            {/* Icons pushed to the right */}
             <div className="flex items-center gap-1.5 ml-auto shrink-0">
               <GitHubButton githubUrl={project.githubUrl} compact />
               <LinkButton url={project.url} />
@@ -315,7 +455,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
             </div>
             <div className="mx-auto text-xs font-mono text-zinc-400 truncate max-w-50 italic">
-              {project.url || "coming soon…"}
+              {project.url || "preview unavailable…"}
             </div>
           </div>
 
@@ -348,8 +488,8 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                       </svg>
                     </div>
                   </div>
-                  <p className="text-2xl font-bold text-zinc-800 tracking-tight">Coming Soon</p>
-                  <p className="text-sm text-zinc-400 mt-2 font-medium">This project is not available online for now.</p>
+                  <p className="text-2xl font-bold text-zinc-800 tracking-tight">In Development</p>
+                  <p className="text-sm text-zinc-400 mt-2 font-medium">This project is currently being polished.</p>
                   {/* Decorative dots */}
                   <div className="flex gap-2 mt-6">
                     <span className="w-2 h-2 rounded-full bg-zinc-300 animate-bounce [animation-delay:0ms]" />
@@ -365,7 +505,12 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         {/* Right panel */}
         <div className="w-full md:w-80 lg:w-96 p-8 md:p-12 flex flex-col justify-between shrink-0 overflow-y-auto custom-scrollbar bg-white/50">
           <div>
-            <h3 className="text-3xl font-bold text-zinc-900 mb-2">{project.name}</h3>
+            <div className="flex items-center gap-4 mb-4">
+              {project.caseStudyUrl && !project.badge && (
+                <CaseStudyButton caseStudyUrl={project.caseStudyUrl} compact={true} />
+              )}
+              <h3 className="text-3xl font-bold text-zinc-900">{project.name}</h3>
+            </div>
             <p className="text-zinc-500 text-sm mb-6">{project.url}</p>
             <p className="text-zinc-600 mb-8">{project.description}</p>
 
@@ -375,7 +520,9 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               ))}
             </div>
 
-            <GitHubButton githubUrl={project.githubUrl} />
+            <div className="flex flex-wrap gap-4 mb-8">
+              <GitHubButton githubUrl={project.githubUrl} />
+            </div>
           </div>
 
           <button
@@ -392,6 +539,9 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 
 /* ── Work section ─────────────────────────────────── */
 export default function Work() {
+  const [showAll, setShowAll] = useState(false);
+  const visibleProjects = showAll ? projects : projects.slice(0, 6);
+
   return (
     <section id="work" className="py-24 px-4 md:px-8 text-zinc-900">
       <div className="max-w-6xl mx-auto">
@@ -402,14 +552,48 @@ export default function Work() {
           transition={{ duration: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold tracking-tight">Selected Work</h2>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight">Selected Projects</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project) => (
+          {visibleProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>
+
+        {projects.length > 6 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="mt-12 flex flex-col md:flex-row items-center justify-center gap-4"
+          >
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="group relative inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 text-white rounded-full font-semibold transition-all hover:bg-zinc-800 hover:shadow-xl active:scale-95"
+            >
+              <span>{showAll ? "Show Less" : "More projects"}</span>
+              <svg
+                viewBox="0 0 24 24"
+                className={`w-4 h-4 fill-none stroke-current stroke-2 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+              >
+                <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+
+            <a
+              href="https://github.com/i-harshit-sharma"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-2 px-8 py-4 border-2 border-zinc-900 text-zinc-900 rounded-full font-semibold transition-all hover:bg-zinc-900 hover:text-white hover:shadow-xl active:scale-95"
+            >
+              <span>Visit GitHub Profile</span>
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
+                <path d={githubPath} />
+              </svg>
+            </a>
+          </motion.div>
+        )}
 
         {/* ── GitHub Stats ─────────────────────────────── */}
         <motion.div

@@ -1,4 +1,5 @@
 import { ArrowUpRight, House } from "lucide-react"
+import Link from "next/link"
 import React from "react"
 
 export default function Navbar() {
@@ -8,7 +9,7 @@ export default function Navbar() {
             <div className="px-6 font-semibold text-[16px] py-3 cursor-pointer rounded-full hover:bg-[#222222dd] transition-colors duration-300 ease-in-out">Projects</div>
             <div className="px-6 font-semibold text-[16px] py-3 cursor-pointer rounded-full hover:bg-[#222222dd] transition-colors duration-300 ease-in-out">Experiences</div>
             <div className="px-6 font-semibold text-[16px] py-3 cursor-pointer rounded-full hover:bg-[#222222dd] transition-colors duration-300 ease-in-out">Skills</div>
-            <div className="px-6 font-semibold text-[16px] py-3 cursor-pointer rounded-full hover:bg-[#222222dd] transition-colors duration-300 ease-in-out">Resume</div>
+            <Link href="https://drive.google.com/file/d/1PsOE9OqnbHmFbkysf6Thp79rxkA4P-S2/view?usp=drive_link" target="_blank" className="px-6 font-semibold text-[16px] py-3 cursor-pointer rounded-full hover:bg-[#222222dd] transition-colors duration-300 ease-in-out">Resume</Link>
             <div className="px-6 font-semibold text-[16px] py-3 cursor-pointer rounded-full bg-[#111] transition-colors duration-300 ease-in-out flex items-center gap-2">Let's Talk <ArrowUpRight className="w-4 h-4" /></div>
         </div>
     )

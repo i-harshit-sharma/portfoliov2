@@ -13,7 +13,6 @@ import Image from "next/image"
 
 
 const path = "M 0 200 L 300 200 C 480 200 480 15 390 15 C 300 15 300 315 390 315 C 480 315 480 200 660 200 L 1000 200"
-// const path = "M0 174.9H362.44C541.72 174.9 587.785 68.475 498.145 68.475C408.505 68.475 408.505 265.65 498.145 265.65C587.785 265.65 541.72 174.9 721 174.9H996"
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -65,7 +64,7 @@ export default function Hero() {
               }}
               containerRef={containerRef}
             >
-              Harshit Sharma  
+              Harshit Sharma
             </VariableFontAndCursor>
             {/* <Volume2 className="inline-block align-top rotate-330 mx-2" /> */}
           </VerticalCutReveal>
@@ -90,13 +89,13 @@ export default function Hero() {
                 </motion.span>
                 <TextRotate
                   texts={[
-                    { text: "work!", prefix: <Image height={16} width={16} src="/work.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="work" unoptimized/> },
-                    { text: "fancy!", prefix: <Image height={16} width={16} src="/fancy.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fancy" unoptimized/> },
-                    { text: "right!", prefix: <Image height={16} width={16} src="/right.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fancy" unoptimized/> },
-                    { text: "fast!", prefix: <Image height={16} width={16} src="/fast.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fast" unoptimized/> },
-                    { text: "fun!", prefix: <Image height={16} width={16} src="/fun.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fun" unoptimized/> },
-                    { text: "rock!", prefix: <Image height={16} width={16} src="/rock.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="rock" unoptimized/> },
-                    { text: "pop!", prefix: <Image height={16} width={16} src="/pop.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="pop" unoptimized/> },
+                    { text: "work!", prefix: <Image height={16} width={16} src="/work.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="work" unoptimized /> },
+                    { text: "fancy!", prefix: <Image height={16} width={16} src="/fancy.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fancy" unoptimized /> },
+                    { text: "right!", prefix: <Image height={16} width={16} src="/right.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fancy" unoptimized /> },
+                    { text: "fast!", prefix: <Image height={16} width={16} src="/fast.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fast" unoptimized /> },
+                    { text: "fun!", prefix: <Image height={16} width={16} src="/fun.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="fun" unoptimized /> },
+                    { text: "rock!", prefix: <Image height={16} width={16} src="/rock.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="rock" unoptimized /> },
+                    { text: "pop!", prefix: <Image height={16} width={16} src="/pop.webp" priority className="w-4 h-4 sm:w-6 sm:h-6 mr-2 select-none" alt="pop" unoptimized /> },
                   ]}
                   mainClassName="text-white px-2 sm:px-4 md:px-3 bg-[#f97316] overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center items-center rounded-lg"
                   staggerFrom={"last"}
@@ -116,21 +115,21 @@ export default function Hero() {
           path={path}
 
           viewBox="0 0 996 330"
-          baseVelocity={1}
-          slowdownOnHover={true}
+          baseVelocity={5}
+          // slowdownOnHover={true}
 
-          draggable={true}
+          // draggable={true}
           repeat={2}
-          dragSensitivity={0.1}
+          // dragSensitivity={0.1}
           className="w-full absolute z-1 h-full top-0 aspect-[996/330] text-gray-300"
           responsive
           showPath={true}
-          grabCursor
+        // grabCursor
         >
           {imgs.map((btn, i) => (
             <div
               key={i}
-              className="hover:scale-105 transition-transform duration-300 ease-in-out text-[10px] bg-white text-gray-500"
+              className="hover:scale-105 transition-transform duration-300 ease-in-out text-[10px] bg-white rounded text-gray-500"
             >
               {btn.name}
             </div>
@@ -138,7 +137,7 @@ export default function Hero() {
         </MarqueeAlongSvgPath>
       </div>
 
-      
+
     </div>
   )
 }

@@ -9,6 +9,7 @@ const About = () => {
   return (
     <div
       ref={containerRef}
+      id="about"
       className="w-full min-h-screen flex items-center justify-center bg-white relative overflow-hidden dark:bg-black"
     >
       {/* Background Pattern */}
@@ -153,19 +154,19 @@ const About = () => {
             >
               <div className="relative group inline-block">
                 {/* The Link */}
-                Currently working on my app 
-                <Link 
-                  href="https://github.com/i-harshit-sharma/app-dev" 
+                Currently working on my app
+                <Link
+                  href="https://github.com/i-harshit-sharma/app-dev"
                   className="text-[#f97316] font-bold underline"
                 >
                   Finvault
                 </Link>
-              
+
                 {/* The Hover Image */}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-48 p-1 bg-white border rounded shadow-lg">
-                  <img 
-                    src="/path-to-your-preview.jpg" 
-                    alt="Finvault Preview" 
+                  <img
+                    src="/path-to-your-preview.jpg"
+                    alt="Finvault Preview"
                     className="rounded-sm w-full h-auto"
                   />
                 </div>

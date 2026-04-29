@@ -170,7 +170,7 @@ const Skills = () => {
                       onHoverEnd={() => setHoveredSkill(null)}
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      className="relative group cursor-pointer select-none"
+                      className={`relative group cursor-pointer select-none ${isHovered ? "z-50" : "z-10"}`}
                     >
                       {/* Gradient Border */}
                       {isHovered && (

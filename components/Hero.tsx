@@ -49,23 +49,26 @@ export default function Hero() {
               delay: 0.5,
             }}
           >
-            <VariableFontAndCursor
+            {/* <VariableFontAndCursor */}
+            <div
               className="font-sans text-5xl font-bold sm:text-7xl md:text-9xl text-[#f97316]"
-              fontVariationMapping={{
-                y: { name: "wght", min: 300, max: 900 },
-                x: {
-                  name: "skewX",
-                  min: -2,
-                  max: -10,
-                  attribute: "transform",
-                  unit: "deg",
-                  template: "skewX($value)",
-                },
-              }}
-              containerRef={containerRef}
+              // fontVariationMapping={{
+              //   y: { name: "wght", min: 600, max: 600 },
+              //   x: {
+              //     name: "skewX",
+              //     min: 0,
+              //     max: 0,
+              //     attribute: "transform",
+              //     unit: "deg",
+              //     template: "skewX($value)",
+              //   },
+              // }}
+              // containerRef={containerRef}
             >
               Harshit Sharma
-            </VariableFontAndCursor>
+            </div>
+            {/*  </VariableFontAndCursor> */}
+
             {/* <Volume2 className="inline-block align-top rotate-330 mx-2" /> */}
           </VerticalCutReveal>
           <VerticalCutReveal
@@ -105,7 +108,7 @@ export default function Hero() {
                   staggerDuration={0.025}
                   splitLevelClassName="overflow-hidden"
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                  rotationInterval={4000}
+                  rotationInterval={5000}
                 />
               </motion.div>
             </LayoutGroup>
@@ -115,7 +118,7 @@ export default function Hero() {
           path={path}
 
           viewBox="0 0 996 330"
-          baseVelocity={5}
+          baseVelocity={1}
           // slowdownOnHover={true}
 
           // draggable={true}

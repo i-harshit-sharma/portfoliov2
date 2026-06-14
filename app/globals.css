@@ -149,3 +149,40 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
+
+@keyframes moving-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-moving-gradient {
+  background-size: 200% auto;
+  animation: moving-gradient 3s linear infinite;
+}
+
+.gradient-border-hover {
+  position: absolute;
+  inset: -1px; /* offset to cover the parent border exactly */
+  border: 1.5px solid transparent;
+  border-radius: inherit;
+  background: radial-gradient(200px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), #ff7a00 0%, #ec4899 50%, #7c3aed 80%, transparent 100%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 30;
+}
+
+.group:hover .gradient-border-hover {
+  opacity: 1;
+}

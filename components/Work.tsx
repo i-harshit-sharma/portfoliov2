@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { ChevronsLeft, Eye, MousePointerSquareDashed, Code2, Database, ChevronLeft, ChevronRight, Smartphone, ExternalLink, RotateCw, ChevronDown, MoreHorizontal, Share, Globe } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Android, Clerk, Cloudflare, Cloudinary, CPlusPlus, DigitalOcean, Docker, ExpressJsDark, ExpressJsLight, Firebase, Kotlin, Linux, MongoDB, NextJs, PnpmDark, PostgreSQL, Prisma, ShadcnUI, TailwindCSS, Tensorflow, TypeScript } from "developer-icons";
@@ -24,22 +25,22 @@ const projects = [
       { icon: <Cloudinary />, label: "Cloudinary" },
     ] as Tag[],
   },
-  {
-    id: 2,
-    name: "NIT Delhi Website Redesign",
-    description: "Helped redesign of NIT Delhi's official website with a modern research portal.",
-    url: "https://new.nitdelhi.ac.in/research/publication/journal?affiliated=Yes",
-    imageUrl: "/nitd.png",
-    githubUrl: "",
-    caseStudyUrl: "/case-studies/nit-delhi",
-    previewAvailable: true,
-    tags: [
-      { icon: <NextJs />, label: "Next.js" },
-      { icon: <MongoDB />, label: "MongoDB" },
-      { icon: <ShadcnUI />, label: "shadcn/ui" },
-      { icon: <PnpmDark />, label: "pnpm" },
-    ] as Tag[],
-  },
+  // {
+  //   id: 2,
+  //   name: "NIT Delhi Website Redesign",
+  //   description: "Helped redesign of NIT Delhi's official website with a modern research portal.",
+  //   url: "https://new.nitdelhi.ac.in/research/publication/journal?affiliated=Yes",
+  //   imageUrl: "/nitd.png",
+  //   githubUrl: "",
+  //   caseStudyUrl: "/case-studies/nit-delhi",
+  //   previewAvailable: true,
+  //   tags: [
+  //     { icon: <NextJs />, label: "Next.js" },
+  //     { icon: <MongoDB />, label: "MongoDB" },
+  //     { icon: <ShadcnUI />, label: "shadcn/ui" },
+  //     { icon: <PnpmDark />, label: "pnpm" },
+  //   ] as Tag[],
+  // },
   {
     id: 3,
     name: "Collaborative Code Platform",
@@ -310,17 +311,61 @@ function CaseStudyButton({ caseStudyUrl, compact = false }: { caseStudyUrl?: str
   );
 }
 
-/* ── ProjectCard ──────────────────────────────────── */
 function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
+  const [iframeKey, setIframeKey] = useState(0);
   const [canCloseFromBars, setCanCloseFromBars] = useState(false);
   const [isHoveringImage, setIsHoveringImage] = useState(false);
 
   const [circleOrigin, setCircleOrigin] = useState({ x: 50, y: 50 });
-  const mousePosRef = useRef({ x: 50, y: 50 });
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [currentUrl, setCurrentUrl] = useState(project.url);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    setCurrentUrl(project.url);
+  }, [project.url]);
+
+  const handleIframeLoad = () => {
+    setIsIframeLoaded(true);
+    if (iframeRef.current) {
+      try {
+        const url = iframeRef.current.contentWindow?.location.href;
+        if (url) {
+          setCurrentUrl(url);
+        }
+      } catch (e) {
+        // Cross-origin restrictions prevent reading location.href. Keep base URL.
+      }
+    }
+  };
+
+  const goBack = () => {
+    try {
+      if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.history.back();
+      }
+    } catch (e) {
+      console.warn("Back navigation blocked due to same-origin security restrictions.");
+    }
+  };
+
+  const goForward = () => {
+    try {
+      if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.history.forward();
+      }
+    } catch (e) {
+      console.warn("Forward navigation blocked due to same-origin security restrictions.");
+    }
+  };
+
+  useEffect(() => {
+    if (project.previewAvailable) {
+      setHasLoaded(true);
+    }
+  }, [project.previewAvailable]);
 
   useEffect(() => {
     if (isPreviewOpen) {
@@ -331,101 +376,125 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
     }
   }, [isPreviewOpen]);
 
-  const handleMouseMoveOnImage = (e: React.MouseEvent) => {
-    if (isPreviewOpen || !project.previewAvailable) return;
-    mousePosRef.current = {
-      x: (e.clientX / window.innerWidth) * 100,
-      y: (e.clientY / window.innerHeight) * 100,
-    };
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    hoverTimeoutRef.current = setTimeout(() => {
-      setCircleOrigin(mousePosRef.current);
-      setIsPreviewOpen(true);
-      setHasLoaded(true);
-    }, 500);
+  const handleMouseLeaveImage = () => {
+    setIsHoveringImage(false);
   };
 
-  const handleMouseLeaveImage = () => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    setIsHoveringImage(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty("--mouse-x", `${x}px`);
+    cardRef.current.style.setProperty("--mouse-y", `${y}px`);
   };
 
   return (
     <>
       <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="relative group flex flex-col border border-zinc-200 rounded overflow-hidden bg-white"
+        className="relative group flex flex-col border border-zinc-200 rounded bg-white transition-all duration-300"
       >
-        {/* ── Image area ──────────────────────────────── */}
-        <div
-          className="relative w-full h-64 overflow-hidden cursor-pointer bg-zinc-100 shrink-0"
-          onMouseMove={handleMouseMoveOnImage}
-          onMouseEnter={() => setIsHoveringImage(true)}
-          onMouseLeave={handleMouseLeaveImage}
-        >
-          {project.imageUrl ? (
-            <Image
-              src={project.imageUrl}
-              alt={project.name}
-              fill
-              className={`object-cover object-top transition-all duration-500 ${isHoveringImage ? "blur-sm brightness-75" : " blur-0 brightness-100"}`}
-            />
-          ) : (
-            <div className={`absolute inset-0 bg-gradient-to-br from-zinc-200 to-zinc-300 transition-all duration-500 ${isHoveringImage ? "brightness-75" : ""}`} />
-          )}
+        {/* Animated Moving Gradient Border on hover (follows cursor) */}
+        <div className="gradient-border-hover" />
+          {/* ── Image area ──────────────────────────────── */}
+          <div
+            className={`relative w-full h-64 overflow-hidden rounded-t-[inherit] bg-zinc-100 shrink-0 ${project.previewAvailable ? "cursor-pointer" : ""}`}
+            onMouseEnter={() => setIsHoveringImage(true)}
+            onMouseLeave={handleMouseLeaveImage}
+            onClick={(e) => {
+              if (!project.previewAvailable) return;
+              setCircleOrigin({
+                x: (e.clientX / window.innerWidth) * 100,
+                y: (e.clientY / window.innerHeight) * 100,
+              });
+              setIsPreviewOpen(true);
+              setHasLoaded(true);
+            }}
+          >
+            {project.imageUrl ? (
+              <Image
+                src={project.imageUrl}
+                alt={project.name}
+                fill
+                className="object-cover object-top transition-all duration-500"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#7c3aed]/20 via-[#ec4899]/15 to-[#ff7a00]/20 transition-all duration-500" />
+            )}
 
-          {/* Status Badge */}
-          {project.badge && (
-            <div className="absolute top-4 left-4 z-20">
-              <motion.span
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-orange-500 text-white rounded-full shadow-lg"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                {project.badge}
-              </motion.span>
-            </div>
-          )}
+            {/* Status Badge */}
+            {project.badge && (
+              <div className="absolute top-4 left-4 z-20">
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-orange-500 text-white rounded-full shadow-lg"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  {project.badge}
+                </motion.span>
+              </div>
+            )}
 
-          {/* "Hover to Preview" overlay */}
-          {project.previewAvailable && (
-            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isHoveringImage ? "opacity-100" : "opacity-0"}`}>
-              <span className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white text-sm font-semibold tracking-wide shadow-lg">
-                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z" />
-                </svg>
-                Hover to Preview
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* ── Card bottom content ──────────────────────── */}
-        <div className="p-6 flex flex-col gap-3">
-          <div className="flex items-center justify-between flex-wrap">
-            <h3 className="text-xl font-bold text-zinc-900">{project.name}</h3>
-            {project.caseStudyUrl && !project.badge && (
-              <CaseStudyButton caseStudyUrl={project.caseStudyUrl} compact={true} />
+            {/* Live Preview Button (Top Right) */}
+            {project.previewAvailable && (
+              <div className="absolute top-4 right-4 z-20">
+                <div
+                  className="pointer-events-none flex items-center justify-center w-11 h-11 rounded bg-[#fff0e6]/70 text-[#5844ff] group-hover:bg-[#5844ff] group-hover:text-white shadow-md transition-all duration-300 border border-[#fff0e6]/30"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-5 h-5 stroke-current"
+                    fill="none"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {/* Top-Right Bracket */}
+                    <path
+                      d="M 13 7 h 4 v 4"
+                      className="transition-transform duration-300 ease-out group-hover:translate-x-[2px] group-hover:-translate-y-[2px]"
+                    />
+                    {/* Bottom-Left Bracket */}
+                    <path
+                      d="M 11 17 H 7 v -4"
+                      className="transition-transform duration-300 ease-out group-hover:-translate-x-[2px] group-hover:translate-y-[2px]"
+                    />
+                  </svg>
+                </div>
+              </div>
             )}
           </div>
-          <p className="text-zinc-500 text-sm leading-relaxed">{project.description}</p>
 
-          {/* Tags row + Links */}
-          <div className="flex items-center gap-2 flex-wrap mt-auto pt-2">
-            {project.tags.map((tag, index) => (
-              <TagPill key={index} tag={tag} size="sm" />
-            ))}
-            <div className="flex items-center gap-1.5 ml-auto shrink-0">
-              <GitHubButton githubUrl={project.githubUrl} compact />
-              <LinkButton url={project.url} />
+          {/* ── Card bottom content ──────────────────────── */}
+          <div className="p-6 flex flex-col gap-3">
+            <div className="flex items-center justify-between flex-wrap">
+              <h3 className="text-xl font-bold text-zinc-900">{project.name}</h3>
+              {project.caseStudyUrl && !project.badge && (
+                <CaseStudyButton caseStudyUrl={project.caseStudyUrl} compact={true} />
+              )}
+            </div>
+            <p className="text-zinc-500 text-sm leading-relaxed">{project.description}</p>
+
+            {/* Tags row + Links */}
+            <div className="flex items-center gap-2 flex-wrap mt-auto pt-2">
+              {project.tags.map((tag, index) => (
+                <TagPill key={index} tag={tag} size="sm" />
+              ))}
+              <div className="flex items-center gap-1.5 ml-auto shrink-0">
+                <GitHubButton githubUrl={project.githubUrl} compact />
+                <LinkButton url={project.url} />
+              </div>
             </div>
           </div>
-        </div>
       </motion.div>
 
       {/* ── Full Screen Preview ──────────────────────── */}
@@ -440,22 +509,74 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         style={{ pointerEvents: isPreviewOpen ? "auto" : "none" }}
-        onMouseMove={(e) => {
-          if (!canCloseFromBars) return;
-          if (e.target === e.currentTarget) setIsPreviewOpen(false);
-        }}
       >
         {/* Iframe panel */}
         <div className="flex-1 h-full flex flex-col bg-white shadow-[0_0_40px_rgba(0,0,0,0.1)] border-r border-zinc-200 z-10">
-          {/* Mac-style top bar */}
-          <div className="w-full h-8 bg-zinc-100 flex items-center px-4 border-b border-zinc-200 shrink-0">
-            <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-              <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-              <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+          {/* Custom Dev-Style Toolbar Header */}
+          <div className="w-full h-12 bg-zinc-50 border-b border-zinc-200 flex items-center justify-between px-3 shrink-0 select-none text-zinc-600 text-sm gap-4">
+            {/* Left side actions */}
+            <div className="flex items-center gap-2">
+              {/* Back / Close button */}
+              <button
+                onClick={() => setIsPreviewOpen(false)}
+                className="p-1 hover:bg-zinc-100 rounded border border-zinc-200 bg-white transition-colors text-zinc-600 hover:text-zinc-900 cursor-pointer flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium shadow-xs"
+                title="Close Preview"
+              >
+                <ChevronsLeft className="w-3.5 h-3.5" />
+                <span>Back</span>
+              </button>
             </div>
-            <div className="mx-auto text-xs font-mono text-zinc-400 truncate max-w-50 italic">
-              {project.url || "preview unavailable…"}
+
+            {/* Middle: Address/Path Bar */}
+            <div className="flex-1 max-w-xl flex items-center justify-between bg-white border border-zinc-200 rounded h-8 px-2.5 gap-2 shadow-xs">
+              <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                <button
+                  onClick={goBack}
+                  className="p-0.5 hover:bg-zinc-150 rounded text-zinc-500 hover:text-zinc-900 cursor-pointer transition-colors"
+                  title="Go back"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={goForward}
+                  className="p-0.5 hover:bg-zinc-150 rounded text-zinc-500 hover:text-zinc-900 cursor-pointer transition-colors"
+                  title="Go forward"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+                <div className="w-[1px] h-3.5 bg-zinc-200 mx-0.5 shrink-0" />
+                <Smartphone className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                <span className="text-zinc-500 font-mono text-xs select-all truncate">
+                  {currentUrl || "preview unavailable"}
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1 hover:bg-zinc-100 rounded transition-colors text-zinc-400 hover:text-zinc-700"
+                    title="Open in new tab"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                <button
+                  onClick={() => setIframeKey(prev => prev + 1)}
+                  className="p-1 hover:bg-zinc-100 rounded transition-colors text-zinc-400 hover:text-zinc-700 cursor-pointer"
+                  title="Reload"
+                >
+                  <RotateCw className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Right side actions */}
+            <div className="flex items-center justify-end shrink-0">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-zinc-100 border border-zinc-200 text-zinc-500 rounded text-[10px] uppercase font-mono tracking-wider font-semibold">
+                Live
+              </div>
             </div>
           </div>
 
@@ -469,11 +590,13 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                     </div>
                   )}
                   <iframe
+                    ref={iframeRef}
+                    key={iframeKey}
                     src={project.url}
                     className="w-full h-full border-none bg-white relative z-20"
                     title={project.name}
                     loading="eager"
-                    onLoad={() => setIsIframeLoaded(true)}
+                    onLoad={handleIframeLoad}
                   />
                 </>
               ) : (

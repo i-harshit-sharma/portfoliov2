@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ChevronsLeft, Eye, MousePointerSquareDashed, Code2, Database, ChevronLeft, ChevronRight, Smartphone, ExternalLink, RotateCw, ChevronDown, MoreHorizontal, Share, Globe } from "lucide-react";
+import { ChevronsLeft, Eye, MousePointerSquareDashed, Code2, Database, ChevronLeft, ChevronRight, Smartphone, ExternalLink, RotateCw, ChevronDown, MoreHorizontal, Share, Globe, X } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { Android, Clerk, Cloudflare, Cloudinary, CPlusPlus, DigitalOcean, Docker, ExpressJsDark, ExpressJsLight, Firebase, Kotlin, Linux, MongoDB, NextJs, PnpmDark, PostgreSQL, Prisma, ShadcnUI, TailwindCSS, Tensorflow, TypeScript } from "developer-icons";
@@ -321,10 +321,22 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 
   const [circleOrigin, setCircleOrigin] = useState({ x: 50, y: 50 });
   const [currentUrl, setCurrentUrl] = useState(project.url);
+  const [isCrossOrigin, setIsCrossOrigin] = useState(false);
+  const [copied, setCopied] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const handleShare = () => {
+    if (currentUrl) {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  };
 
   useEffect(() => {
     setCurrentUrl(project.url);
+    setIsCrossOrigin(false);
   }, [project.url]);
 
   const handleIframeLoad = () => {
@@ -332,32 +344,35 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
     if (iframeRef.current) {
       try {
         const url = iframeRef.current.contentWindow?.location.href;
+        setIsCrossOrigin(false);
         if (url) {
           setCurrentUrl(url);
         }
       } catch (e) {
-        // Cross-origin restrictions prevent reading location.href. Keep base URL.
+        setIsCrossOrigin(true);
       }
     }
   };
 
   const goBack = () => {
+    if (isCrossOrigin) return;
     try {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.history.back();
       }
     } catch (e) {
-      console.warn("Back navigation blocked due to same-origin security restrictions.");
+      // Silently handle exception
     }
   };
 
   const goForward = () => {
+    if (isCrossOrigin) return;
     try {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.history.forward();
       }
     } catch (e) {
-      console.warn("Forward navigation blocked due to same-origin security restrictions.");
+      // Silently handle exception
     }
   };
 
@@ -369,10 +384,15 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 
   useEffect(() => {
     if (isPreviewOpen) {
+      document.body.style.overflow = "hidden";
       const timer = setTimeout(() => setCanCloseFromBars(true), 700);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = "";
+      };
     } else {
       setCanCloseFromBars(false);
+      document.body.style.overflow = "";
     }
   }, [isPreviewOpen]);
 
@@ -511,19 +531,18 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
         style={{ pointerEvents: isPreviewOpen ? "auto" : "none" }}
       >
         {/* Iframe panel */}
-        <div className="flex-1 h-full flex flex-col bg-white shadow-[0_0_40px_rgba(0,0,0,0.1)] border-r border-zinc-200 z-10">
+        <div className="flex-1 h-full flex flex-col bg-white border-x border-zinc-200 z-10">
           {/* Custom Dev-Style Toolbar Header */}
-          <div className="w-full h-12 bg-zinc-50 border-b border-zinc-200 flex items-center justify-between px-3 shrink-0 select-none text-zinc-600 text-sm gap-4">
+          <div className="w-full h-12 bg-zinc-50 border-b border-zinc-200 flex items-center justify-between px-3 shrink-0 select-none text-zinc-800 text-sm gap-4">
             {/* Left side actions */}
             <div className="flex items-center gap-2">
-              {/* Back / Close button */}
+              {/* Close button */}
               <button
                 onClick={() => setIsPreviewOpen(false)}
-                className="p-1 hover:bg-zinc-100 rounded border border-zinc-200 bg-white transition-colors text-zinc-600 hover:text-zinc-900 cursor-pointer flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium shadow-xs"
+                className="p-1 hover:bg-zinc-100 rounded border border-zinc-200 bg-white transition-colors text-zinc-800 hover:text-zinc-950 cursor-pointer flex items-center justify-center w-8 h-8 shadow-xs"
                 title="Close Preview"
               >
-                <ChevronsLeft className="w-3.5 h-3.5" />
-                <span>Back</span>
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -532,20 +551,22 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
               <div className="flex items-center gap-1.5 min-w-0 flex-1">
                 <button
                   onClick={goBack}
-                  className="p-0.5 hover:bg-zinc-150 rounded text-zinc-500 hover:text-zinc-900 cursor-pointer transition-colors"
-                  title="Go back"
+                  disabled={isCrossOrigin}
+                  className={`p-0.5 rounded transition-colors ${isCrossOrigin ? "text-zinc-300 cursor-not-allowed opacity-50" : "text-zinc-800 hover:bg-zinc-150 hover:text-zinc-950 cursor-pointer"}`}
+                  title={isCrossOrigin ? "History navigation disabled due to cross-origin same-origin browser restrictions" : "Go back"}
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={goForward}
-                  className="p-0.5 hover:bg-zinc-150 rounded text-zinc-500 hover:text-zinc-900 cursor-pointer transition-colors"
-                  title="Go forward"
+                  disabled={isCrossOrigin}
+                  className={`p-0.5 rounded transition-colors ${isCrossOrigin ? "text-zinc-300 cursor-not-allowed opacity-50" : "text-zinc-800 hover:bg-zinc-150 hover:text-zinc-950 cursor-pointer"}`}
+                  title={isCrossOrigin ? "History navigation disabled due to cross-origin same-origin browser restrictions" : "Go forward"}
                 >
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
                 <div className="w-[1px] h-3.5 bg-zinc-200 mx-0.5 shrink-0" />
-                <Smartphone className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                <Globe className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
                 <span className="text-zinc-500 font-mono text-xs select-all truncate">
                   {currentUrl || "preview unavailable"}
                 </span>
@@ -556,7 +577,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1 hover:bg-zinc-100 rounded transition-colors text-zinc-400 hover:text-zinc-700"
+                    className="p-1 hover:bg-zinc-100 rounded transition-colors text-zinc-800 hover:text-zinc-950"
                     title="Open in new tab"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -564,7 +585,7 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
                 )}
                 <button
                   onClick={() => setIframeKey(prev => prev + 1)}
-                  className="p-1 hover:bg-zinc-100 rounded transition-colors text-zinc-400 hover:text-zinc-700 cursor-pointer"
+                  className="p-1 hover:bg-zinc-100 rounded transition-colors text-zinc-800 hover:text-zinc-950 cursor-pointer"
                   title="Reload"
                 >
                   <RotateCw className="w-3.5 h-3.5" />
@@ -574,9 +595,14 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
 
             {/* Right side actions */}
             <div className="flex items-center justify-end shrink-0">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-zinc-100 border border-zinc-200 text-zinc-500 rounded text-[10px] uppercase font-mono tracking-wider font-semibold">
-                Live
-              </div>
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-1.5 px-2.5 py-1 hover:bg-zinc-100 border border-zinc-200 text-zinc-800 hover:text-zinc-950 rounded text-xs font-medium bg-white transition-colors cursor-pointer shadow-xs"
+                title="Copy link to clipboard"
+              >
+                <Share className="w-3.5 h-3.5" />
+                <span>{copied ? "Copied!" : "Share"}</span>
+              </button>
             </div>
           </div>
 
@@ -660,6 +686,29 @@ function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   );
 }
 
+function AnimatedCounter({ value }: { value: number }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = value;
+    if (start === end) return;
+
+    const totalDuration = 1.2; // seconds
+    const incrementTime = Math.max((totalDuration / end) * 1000, 8);
+
+    const timer = setInterval(() => {
+      start += 1;
+      setCount(start);
+      if (start === end) clearInterval(timer);
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return <span className="font-mono text-emerald-600 font-bold text-sm">{count}</span>;
+}
+
 /* ── Work section ─────────────────────────────────── */
 export default function Work() {
   const [showAll, setShowAll] = useState(false);
@@ -695,12 +744,12 @@ export default function Work() {
           >
             <button
               onClick={() => setShowAll(!showAll)}
-              className="group relative inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 text-white rounded-full font-semibold transition-all hover:bg-zinc-800 hover:shadow-xl active:scale-95"
+              className="group relative inline-flex items-center gap-2 px-6 py-2.5 bg-zinc-900 text-white rounded-full text-sm font-semibold transition-all hover:bg-zinc-800 hover:shadow-lg active:scale-95 cursor-pointer"
             >
               <span>{showAll ? "Show Less" : "More projects"}</span>
               <svg
                 viewBox="0 0 24 24"
-                className={`w-4 h-4 fill-none stroke-current stroke-2 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+                className={`w-3.5 h-3.5 fill-none stroke-current stroke-2 transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
               >
                 <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -710,10 +759,10 @@ export default function Work() {
               href="https://github.com/i-harshit-sharma"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-2 px-8 py-4 border-2 border-zinc-900 text-zinc-900 rounded-full font-semibold transition-all hover:bg-zinc-900 hover:text-white hover:shadow-xl active:scale-95"
+              className="group relative inline-flex items-center gap-2 px-6 py-2.5 border border-zinc-900 text-zinc-900 rounded-full text-sm font-semibold transition-all hover:bg-zinc-900 hover:text-white hover:shadow-lg active:scale-95"
             >
               <span>Visit GitHub Profile</span>
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden>
+              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" aria-hidden>
                 <path d={githubPath} />
               </svg>
             </a>
@@ -728,40 +777,29 @@ export default function Work() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mt-20"
         >
-          <div className="flex items-center gap-3 mb-8">
-            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-zinc-800" aria-hidden>
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            <h3 className="text-xl font-bold text-zinc-900 tracking-tight">GitHub Activity</h3>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div className="flex items-center gap-3">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-zinc-800" aria-hidden>
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+              <h3 className="text-xl font-bold text-zinc-900 tracking-tight">GitHub Activity</h3>
+            </div>
+            
+            {/* Animated Counter in Header */}
+            <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-100 rounded text-xs font-semibold text-emerald-850 shadow-xs self-start sm:self-auto">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>
+                <AnimatedCounter value={148} /> contributions in last 30 days
+              </span>
+            </div>
           </div>
-
-          {/* Row 1 — Activity graph (full width) */}
-          <div className="rounded overflow-hidden border border-zinc-200 bg-whiteAdd ">
-            <div className="px-4 pt-4 pb-1 text-xs font-semibold text-zinc-400 uppercase tracking-widest">Activity Graph</div>
-            <img
-              src="https://github-readme-activity-graph.vercel.app/graph?username=i-harshit-sharma&bg_color=ffffff&color=52525b&line=18181b&point=18181b&area=true&area_color=e4e4e7&hide_border=true&custom_title=Contribution%20Activity"
-              alt="GitHub Activity Graph"
-              className="w-full h-auto"
-              loading="eager"
-            />
-          </div>
-
-          {/* Row 2 — Streak (full width) */}
-          {/* <div className="mt-4 rounded-xl overflow-hidden border border-zinc-200 bg-white hover:shadow-md transition-shadow duration-300">
-            <img
-              src="https://streak-stats.demolab.com?user=i-harshit-sharma&hide_current_streak=true&hide_longest_streak=true"
-              alt="GitHub Streak"
-              className="w-full h-auto"
-              loading="lazy"
-            />
-          </div> */}
 
           {/* Row 3 — Contribution Calendar (full width) */}
-          <div className="mt-4 rounded overflow-hidden border border-zinc-200 bg-white">
+          <div className="rounded overflow-hidden border border-zinc-200 bg-white">
             <div className="px-4 pt-4 pb-1 text-xs font-semibold text-zinc-400 uppercase tracking-widest">Contribution Calendar</div>
             <div className="p-4">
               <img
-                src="https://ghchart.rshah.org/18181b/i-harshit-sharma"
+                src="https://ghchart.rshah.org/i-harshit-sharma"
                 alt="GitHub Contribution Calendar"
                 className="w-full h-auto"
                 loading="eager"

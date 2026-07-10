@@ -45,7 +45,7 @@ export default function Footer() {
             <span className="text-[#f97316]">extraordinary</span> together.
           </h2>
           <Link
-            href="mailto:harshitsharma@harshits.live"
+            href="https://cal.com/harshit163/quick-meeting"
             className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 text-white dark:bg-white dark:text-black rounded-full font-semibold transition-all hover:bg-zinc-800 dark:hover:bg-zinc-200 hover:shadow-xl active:scale-95"
           >
             <span>Start a Conversation</span>

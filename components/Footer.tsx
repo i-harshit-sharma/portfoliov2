@@ -12,26 +12,26 @@ const socialLinks = [
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/i-harshit-sharma", // Placeholder guess
+    href: "https://linkedin.com/in/harshit163", // Placeholder guess
     icon: <Linkedin className="w-5 h-5" />,
   },
   {
     name: "Email",
-    href: "mailto:harshitsharma@harshits.live", // Inferred from blog
+    href: "mailto:harshitsharma9232@gmail.com", // Inferred from blog
     icon: <Mail className="w-5 h-5" />,
   },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/i_harshit_sh", // Placeholder guess
-    icon: <Twitter className="w-5 h-5" />,
-  },
+  // {
+  //   name: "Twitter",
+  //   href: "https://twitter.com/i_harshit_sh", // Placeholder guess
+  //   icon: <Twitter className="w-5 h-5" />,
+  // },
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-white border-t border-zinc-100 py-16 px-6 md:px-12 dark:bg-black dark:border-zinc-900 mb-8">
+    <footer className="w-full bg-white border-t border-zinc-100 py-16 px-6 md:px-12 dark:bg-black dark:border-zinc-900">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         {/* Contact CTA Section */}
         <motion.div

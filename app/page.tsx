@@ -5,17 +5,19 @@ import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Work from "@/components/Work";
 import Footer from "@/components/Footer";
+import { ParallaxComponent } from "@/components/parallax";
 
 export default function Home() {
   return (
     <>
+      <ParallaxComponent/>
       <Heading/>
-      <Hero/>
-      <About/>
-      <Skills/>
-      <Work/>
+      {/*<Hero/>*/}
+      {/*<About/>*/}
+      {/*<Skills/>*/}
+      {/*<Work/>*/}
       <Footer/>
-      <Navbar/>
+      {/*<Navbar/>*/}
     </>
   );
 }

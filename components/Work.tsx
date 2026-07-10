@@ -718,16 +718,12 @@ export default function Work() {
     <section className="py-24 px-4 md:px-8 text-zinc-900"
       id="projects"
     >
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+      <div className="mx-8 mx-auto">
+        <div
           className="mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight">Selected Projects</h2>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {visibleProjects.map((project) => (
@@ -737,9 +733,6 @@ export default function Work() {
 
         {projects.length > 6 && (
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
             className="mt-12 flex flex-col md:flex-row items-center justify-center gap-4"
           >
             <button

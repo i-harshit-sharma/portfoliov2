@@ -4,6 +4,7 @@ import "./globals.css";
 import { Playfair } from "next/font/google";
 import { Playwrite_CU_Guides } from "next/font/google";
 import { Comic_Neue } from "next/font/google";
+import Preloader from "@/components/Preloader";
 
 
 export const metadata: Metadata = {
@@ -40,8 +41,9 @@ export default function RootLayout({
 				<meta name="google-site-verification" content="x6fanuK-vqvY8EefCAQN0DNrNLg69JlbEEZGkXxiuVI" />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased`}
+				className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased dark`}
 			>
+				<Preloader />
 				{children}
 			</body>
 		</html>

@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
 import Image from "next/image";
-import { AlarmClock } from "lucide-react";
+import { AlarmClock, MapPinned } from "lucide-react";
 
 export function ParallaxComponent() {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -114,7 +114,7 @@ export function ParallaxComponent() {
                 width="600"
                 // data-parallax-layer="2"
                 alt="Midground trees"
-                className="  mb-20"
+                className="  mb-20 max-[800px]:px-12 max-[700px]:px-16"
               />
             </div>
 
@@ -166,14 +166,15 @@ export function ProfileFooter() {
   }, []);
 
   return (
-    <div className="absolute bottom-6 left-16 right-16 z-20 flex justify-between items-center text-white">
-      <div className="flex items-center gap-2 font-mono text-sm tracking-wider opacity-90">
-        <AlarmClock size={18} className="animate-pulse" />
+    <div className="absolute bottom-12 [500px]:left-16 [500px]:right-16 left-8 right-8 z-20 flex justify-between items-center text-white max-[600px]:justify-center">
+      <div className="flex items-center gap-2 font-mono text-sm tracking-wider opacity-90 max-sm:hidden">
+        <AlarmClock size={18} className="" />
         <span>{time || "00:00:00 AM"}</span>
       </div>
   
-      <div className="text-sm opacity-60 font-medium ">
-        Software engineer from Jaipur / India
+      <div className="flex items-center gap-2 opacity-90">
+        <MapPinned size={18} />
+        <span className="text-sm font-medium">Software engineer from Jaipur / India</span>
       </div>
     </div>
   );

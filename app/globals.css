@@ -186,3 +186,12 @@
 .group:hover .gradient-border-hover {
   opacity: 1;
 }
+
+@utility no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}

@@ -36,12 +36,12 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" className="no-scrollbar">
 			<head>
 				<meta name="google-site-verification" content="x6fanuK-vqvY8EefCAQN0DNrNLg69JlbEEZGkXxiuVI" />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased dark`}
+				className={`no-scrollbar ${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased dark`}
 			>
 				<Preloader />
 				{children}

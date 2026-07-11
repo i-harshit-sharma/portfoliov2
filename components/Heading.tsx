@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 // import LightDarkToggle from "./LightDarkToggle";
 // import Tooltip from "./tooltip";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedinIn, FaRegFileAlt } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { LiaFileInvoiceSolid } from "react-icons/lia";
 
@@ -137,31 +137,31 @@ const Heading = () => {
           </div>
         </div>
       </div>
-      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-12 flex flex-col gap-6 pr-12">
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-12 flex flex-col gap-6 pr-12 max-[600px]:pr-6">
         <Link
           href="https://drive.google.com/file/d/1PsOE9OqnbHmFbkysf6Thp79rxkA4P-S2/view?usp=drive_link"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center font-medium rounded-full shadow-lg transition-colors duration-200 hover:text-gray-50 text-gray-200"
+          className="inline-flex items-center justify-center font-medium rounded-full shadow-lg transition-colors duration-200 hover:text-gray-50 text-gray-300"
         >
-          <LiaFileInvoiceSolid size={20}/>
+          <FaRegFileAlt size={20} />
 
         </Link>
         <Link
           href="https://linkedin.com/in/harshit163"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center font-medium rounded-full shadow-lg transition-colors duration-200 hover:text-gray-50 text-gray-200"
+          className="inline-flex items-center justify-center font-medium rounded-full shadow-lg transition-colors duration-200 hover:text-gray-50 text-gray-300"
         >
-          <FaLinkedinIn size={16}  />
+          <FaLinkedinIn size={20}  />
         </Link>
         <Link
           href="https://github.com/i-harshit-sharma"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center font-medium rounded-full shadow-lg transition-colors duration-200 hover:text-gray-50 text-gray-200"
+          className="inline-flex items-center justify-center font-medium rounded-full shadow-lg transition-colors duration-200 hover:text-gray-50 text-gray-300"
         >
-          <FaGithub size={16} />
+          <FaGithub size={20} />
         </Link>
       </div>
     </>

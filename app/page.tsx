@@ -14,7 +14,7 @@ export default function Home() {
       <Heading/>
       {/*<Hero/>*/}
       {/*<About/>*/}
-      {/*<Skills/>*/}
+      {/* <Skills/> */}
       {/*<Work/>*/}
       <Footer/>
       {/*<Navbar/>*/}

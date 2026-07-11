@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Aldrich, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Playfair } from "next/font/google";
 import { Playwrite_CU_Guides } from "next/font/google";
@@ -28,6 +28,12 @@ const comicNeue = Comic_Neue({
 	weight: ["400", "300", "700"],
 });
 
+const aldrich = Aldrich({
+  variable: "--font-aldrich",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 
 
 export default function RootLayout({
@@ -41,7 +47,7 @@ export default function RootLayout({
 				<meta name="google-site-verification" content="x6fanuK-vqvY8EefCAQN0DNrNLg69JlbEEZGkXxiuVI" />
 			</head>
 			<body
-				className={`no-scrollbar ${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased dark`}
+				className={`no-scrollbar ${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} ${aldrich.variable} antialiased dark`}
 			>
 				<Preloader />
 				{children}

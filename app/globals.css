@@ -45,6 +45,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-aldrich: var(--font-aldrich);
   --font-playfair: var(--font-playfair);
   --font-comic-neue: var(--font-comic-neue);
 }
@@ -194,4 +195,18 @@
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
   }
+}
+
+
+.ft {
+  /* background-image: url('/bg-footer.jpg'); */
+  background-size: cover;       /* Scales the image to fill the entire footer */
+  background-position: center;   /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from tiling */
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.95 ) 25%, rgba(0, 0, 0, 0.6) 60%, rgba(20, 20, 21, 0.3)), linear-gradient(rgba(0, 0, 0, 0.8) 5%, rgba(0,0,0,0.02)), url('/bg-footer.jpg');
+  /* background-image: linear-gradient(to right, blue 10%, purple 70%, pink 100%); */
+  background-blend-mode: overlay, normal,normal;
+  /* Optional: Add padding so your footer content has breathing room over the image */
+  /* padding: 40px 20px;  */
+  color: #ffffff;               /* Ensures your text is readable over the image */
 }

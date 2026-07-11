@@ -114,7 +114,7 @@ export function ParallaxComponent() {
                 width="600"
                 // data-parallax-layer="2"
                 alt="Midground trees"
-                className="  mb-20 max-[800px]:px-12 max-[700px]:px-16"
+                className="  mb-20 max-[800px]:px-12 max-[700px]:px-16 brightness-120"
               />
             </div>
 
